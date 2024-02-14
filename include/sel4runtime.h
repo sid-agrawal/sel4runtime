@@ -65,6 +65,21 @@ seL4_BootInfo *sel4runtime_bootinfo(void);
 sel4runtime_size_t sel4runtime_get_tls_size(void);
 
 /*
+ * Get the ads cap for the initial thread.
+ */
+seL4_CPtr sel4runtime_get_initial_ads_cap(void);
+
+/*
+ * Get the GPI cap from the env
+ */
+seL4_CPtr sel4runtime_get_gpi_cap(void);
+
+/*
+ * Get the PD cap from the env
+ */
+seL4_CPtr sel4runtime_get_pd_cap(void);
+
+/*
  * Get the offset used to calculate the thread pointer from the
  * starting address of the thread area.
  */

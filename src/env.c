@@ -45,6 +45,9 @@ static struct {
     seL4_CPtr initial_thread_tcb;
     seL4_IPCBuffer *initial_thread_ipc_buffer;
 
+    seL4_CPtr initial_ads_cap;
+    seL4_CPtr pd_cap;
+    seL4_CPtr gpi_cap;
     // ELF Headers
     struct {
         sel4runtime_size_t count;
@@ -136,6 +139,21 @@ seL4_BootInfo *sel4runtime_bootinfo(void)
 sel4runtime_size_t sel4runtime_get_tls_size(void)
 {
     return env.tls.region_size;
+}
+
+seL4_CPtr sel4runtime_get_initial_ads_cap(void)
+{
+    return env.initial_ads_cap;
+}
+
+seL4_CPtr sel4runtime_get_gpi_cap(void)
+{
+    return env.gpi_cap;
+}
+
+seL4_CPtr sel4runtime_get_pd_cap(void)
+{
+    return env.pd_cap;
 }
 
 int sel4runtime_initial_tls_enabled(void)
@@ -307,6 +325,18 @@ static void parse_auxv(auxv_t const auxv[])
         }
         case AT_SEL4_IPC_BUFFER_PTR: {
             env.initial_thread_ipc_buffer = auxv[i].a_un.a_ptr;
+            break;
+        }
+        case AT_OSM_ADS_CAP: {
+            env.initial_ads_cap = auxv[i].a_un.a_val;
+            break;
+        }
+        case AT_OSM_GPI_CAP: {
+            env.gpi_cap = auxv[i].a_un.a_val;
+            break;
+        }
+        case AT_OSM_PD_CAP: {
+            env.pd_cap = auxv[i].a_un.a_val;
             break;
         }
         case AT_SEL4_TCB: {
