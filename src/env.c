@@ -47,7 +47,7 @@ static struct {
 
     seL4_CPtr initial_ads_cap;
     seL4_CPtr pd_cap;
-    seL4_CPtr gpi_cap;
+    seL4_CPtr rde_cap;
     // ELF Headers
     struct {
         sel4runtime_size_t count;
@@ -146,9 +146,9 @@ seL4_CPtr sel4runtime_get_initial_ads_cap(void)
     return env.initial_ads_cap;
 }
 
-seL4_CPtr sel4runtime_get_gpi_cap(void)
+seL4_CPtr sel4runtime_get_rde_cap(void)
 {
-    return env.gpi_cap;
+    return env.rde_cap;
 }
 
 seL4_CPtr sel4runtime_get_pd_cap(void)
@@ -331,8 +331,8 @@ static void parse_auxv(auxv_t const auxv[])
             env.initial_ads_cap = auxv[i].a_un.a_val;
             break;
         }
-        case AT_OSM_GPI_CAP: {
-            env.gpi_cap = auxv[i].a_un.a_val;
+        case AT_OSM_RDE_CAP: {
+            env.rde_cap = auxv[i].a_un.a_val;
             break;
         }
         case AT_OSM_PD_CAP: {

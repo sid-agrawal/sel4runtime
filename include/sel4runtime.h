@@ -72,7 +72,7 @@ seL4_CPtr sel4runtime_get_initial_ads_cap(void);
 /*
  * Get the GPI cap from the env
  */
-seL4_CPtr sel4runtime_get_gpi_cap(void);
+seL4_CPtr sel4runtime_get_rde_cap(void);
 
 /*
  * Get the PD cap from the env
