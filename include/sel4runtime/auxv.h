@@ -29,7 +29,6 @@
 
 #define AT_OSM_ADS_CAP            128
 #define AT_OSM_RDE_CAP            129
-#define AT_OSM_PD_CAP             130
 
 typedef struct {
     int a_type;

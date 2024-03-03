@@ -335,10 +335,6 @@ static void parse_auxv(auxv_t const auxv[])
             env.rde_cap = auxv[i].a_un.a_val;
             break;
         }
-        case AT_OSM_PD_CAP: {
-            env.pd_cap = auxv[i].a_un.a_val;
-            break;
-        }
         case AT_SEL4_TCB: {
             env.initial_thread_tcb = auxv[i].a_un.a_val;
             break;
