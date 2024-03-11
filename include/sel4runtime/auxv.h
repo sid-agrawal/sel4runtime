@@ -27,8 +27,7 @@
 #define AT_SEL4_VSPACE            71
 #define AT_SEL4_ASID_POOL         72
 
-#define AT_OSM_ADS_CAP            128
-#define AT_OSM_RDE_CAP            129
+#define AT_OSM_INIT_DATA          128
 
 typedef struct {
     int a_type;
