@@ -21,6 +21,9 @@
 // Static TLS for initial thread.
 static char static_tls[CONFIG_SEL4RUNTIME_STATIC_TLS] MIN_ALIGNED = {};
 
+/* OSmosis data on the TLS */
+extern __thread void *__sel4gpi_osm_data;
+
 // Thread lookup pointers.
 typedef struct {
     sel4runtime_uintptr_t tls_base;
@@ -44,8 +47,7 @@ static struct {
     sel4runtime_uintptr_t initial_thread_tls_base;
     seL4_CPtr initial_thread_tcb;
     seL4_IPCBuffer *initial_thread_ipc_buffer;
-
-    void *osm_init_data;
+    void *initial_thread_osm_data;
 
     // ELF Headers
     struct {
@@ -142,7 +144,7 @@ sel4runtime_size_t sel4runtime_get_tls_size(void)
 
 void *sel4runtime_get_osm_init_data(void)
 {
-    return env.osm_init_data;
+    return __sel4gpi_osm_data;
 }
 
 int sel4runtime_initial_tls_enabled(void)
@@ -184,6 +186,8 @@ sel4runtime_uintptr_t sel4runtime_move_initial_tls(void *tls_memory)
     }
 
     env.initial_thread_tls_base = tls_base;
+
+    __sel4gpi_osm_data = env.initial_thread_osm_data;
 
 #if defined(CONFIG_DEBUG_BUILD)
     if (env.initial_thread_tcb && env.initial_thread_ipc_buffer && env.process_name) {
@@ -317,7 +321,7 @@ static void parse_auxv(auxv_t const auxv[])
             break;
         }
         case AT_OSM_INIT_DATA: {
-            env.osm_init_data = (void *) auxv[i].a_un.a_val;
+            env.initial_thread_osm_data = (void *)auxv[i].a_un.a_val;
             break;
         }
         case AT_SEL4_TCB: {
