@@ -67,7 +67,7 @@ sel4runtime_size_t sel4runtime_get_tls_size(void);
 /*
  * Get the Osmosis init data from the env
  */
-void *sel4runtime_get_osm_init_data(void);
+void *sel4runtime_get_osm_shared_data(void);
 
 /*
  * Get the offset used to calculate the thread pointer from the

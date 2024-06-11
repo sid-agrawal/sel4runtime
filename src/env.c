@@ -142,7 +142,7 @@ sel4runtime_size_t sel4runtime_get_tls_size(void)
     return env.tls.region_size;
 }
 
-void *sel4runtime_get_osm_init_data(void)
+void *sel4runtime_get_osm_shared_data(void)
 {
     return __sel4gpi_osm_data;
 }
@@ -320,7 +320,7 @@ static void parse_auxv(auxv_t const auxv[])
             env.initial_thread_ipc_buffer = auxv[i].a_un.a_ptr;
             break;
         }
-        case AT_OSM_INIT_DATA: {
+        case AT_OSM_SHARED_DATA: {
             env.initial_thread_osm_data = (void *)auxv[i].a_un.a_val;
             break;
         }
