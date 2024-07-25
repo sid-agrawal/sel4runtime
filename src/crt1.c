@@ -21,24 +21,41 @@
  * * an 'zero' auxiliary vector, then
  * * unspecified data.
  */
-void __sel4_start_c(void const *stack)
+void __sel4_start_c(void const *stack, void const *info)
 {
+    runtime_type_t setup_runtime = (runtime_type_t)info;
+
     // First word on the stack is argument count.
     unsigned long argc = *((unsigned long const *) stack);
 
     // Second word on the stack is the start of the argument vector.
     char const *const *argv = &((char const * const *) stack)[1];
 
-    // The environment pointer vector follows after the argv.
-    char const *const *envp = &argv[argc + 1];
-    int envc = 0;
-    while (envp[envc] != SEL4RUNTIME_NULL) {
-        envc++;
+    if (setup_runtime == OSM_PD || setup_runtime == SEL4UTILS_PD)
+    {
+        // The environment pointer vector follows after the argv.
+        char const *const *envp = &argv[argc + 1];
+        int envc = 0;
+        while (envp[envc] != SEL4RUNTIME_NULL)
+        {
+            envc++;
+        }
+
+        // The auxiliary vector follows the environment pointer vector.
+        auxv_t const *auxv = (void const *)(&envp[envc + 1]);
+
+        if (setup_runtime == OSM_PD)
+        {
+            __sel4runtime_start_main_osm(main, argc, argv, envp, auxv);
+        }
+        else
+        {
+            __sel4runtime_start_main(main, argc, argv, envp, auxv);
+        }
     }
-
-
-    // The auxiliary vector follows the environment pointer vector.
-    auxv_t const *auxv = (void const *)(&envp[envc + 1]);
-
-    __sel4runtime_start_main(main, argc, argv, envp, auxv);
+    else
+    {
+        int (*entry)() = info;
+        __sel4runtime_start_entry(entry, argc, argv);
+    }
 }

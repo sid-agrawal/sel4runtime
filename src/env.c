@@ -214,6 +214,14 @@ sel4runtime_pre_exit_cb *sel4runtime_set_pre_exit(sel4runtime_pre_exit_cb *cb)
     return old;
 }
 
+void sel4runtime_exit_no_destruct(int code)
+{
+    if (env.exit_cb != SEL4RUNTIME_NULL)
+    {
+        env.exit_cb(code);
+    }
+}
+
 void sel4runtime_exit(int code)
 {
     if (env.pre_exit_cb != SEL4RUNTIME_NULL) {

@@ -16,6 +16,12 @@
 
 #pragma once
 
+typedef enum runtime_type
+{
+    SEL4UTILS_PD = 1,
+    OSM_PD
+} runtime_type_t;
+
 /*
  * Get the name of the process.
  *
@@ -176,3 +182,9 @@ sel4runtime_pre_exit_cb *sel4runtime_set_pre_exit(sel4runtime_pre_exit_cb *cb);
  * current thread.
  */
 void sel4runtime_exit(int code);
+
+/*
+ * Exits the current thread by calling the registered exit handler
+ * without tearing down the runtime environment
+ */
+void sel4runtime_exit_no_destruct(int code);
