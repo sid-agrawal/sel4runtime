@@ -31,7 +31,7 @@ void __sel4_start_c(void const *stack, void const *info)
     // Second word on the stack is the start of the argument vector.
     char const *const *argv = &((char const * const *) stack)[1];
 
-    if (setup_runtime == OSM_PD || setup_runtime == SEL4UTILS_PD)
+    if (setup_runtime == OSM_PD_RUNTIME || setup_runtime == SEL4UTILS_PD_RUNTIME)
     {
         // The environment pointer vector follows after the argv.
         char const *const *envp = &argv[argc + 1];
@@ -44,7 +44,7 @@ void __sel4_start_c(void const *stack, void const *info)
         // The auxiliary vector follows the environment pointer vector.
         auxv_t const *auxv = (void const *)(&envp[envc + 1]);
 
-        if (setup_runtime == OSM_PD)
+        if (setup_runtime == OSM_PD_RUNTIME)
         {
             __sel4runtime_start_main_osm(main, argc, argv, envp, auxv);
         }

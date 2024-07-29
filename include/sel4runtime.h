@@ -18,8 +18,8 @@
 
 typedef enum runtime_type
 {
-    SEL4UTILS_PD = 1,
-    OSM_PD
+    SEL4UTILS_PD_RUNTIME = 1,
+    OSM_PD_RUNTIME
 } runtime_type_t;
 
 /*
