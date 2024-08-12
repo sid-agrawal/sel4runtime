@@ -34,7 +34,7 @@ void __sel4runtime_start_main_osm(
     sel4runtime_exit(main(argc, argv, envp));
 }
 
-void __sel4runtime_start_entry(
+void __sel4runtime_start_entry_osm(
     int (*entry)(),
     unsigned long argc,
     char const *const *argv)

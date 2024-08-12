@@ -54,7 +54,7 @@ void __sel4runtime_load_env(
  * assuming that it has already been set up.
  * Upon completion of the entry function, calls the registered exit handler.
  */
-void __sel4runtime_start_entry(
+void __sel4runtime_start_entry_osm(
     int (*entry)(),
     unsigned long argc,
     char const *const *argv);

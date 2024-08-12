@@ -56,6 +56,6 @@ void __sel4_start_c(void const *stack, void const *info)
     else
     {
         int (*entry)() = info;
-        __sel4runtime_start_entry(entry, argc, argv);
+        __sel4runtime_start_entry_osm(entry, argc, argv);
     }
 }
